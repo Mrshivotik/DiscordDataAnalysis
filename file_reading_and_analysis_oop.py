@@ -1,8 +1,12 @@
 import matplotlib.pyplot as plt
-import matplotlib.ticker
 import matplotlib.dates as mdates
 from collections import Counter
 import datetime
+
+class DataCheck:
+    """Checks the data input and decides what to do with it."""
+
+    
 
 class Analysis:
     """Analyses a text file."""
