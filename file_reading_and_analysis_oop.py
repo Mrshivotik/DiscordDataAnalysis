@@ -6,7 +6,48 @@ import datetime
 class DataCheck:
     """Checks the data input and decides what to do with it."""
 
+    def __init__(self, *user, file_directory, all_msg = None, all_and_user_msg = None, user_only_msg = None):
+        """Initializes the file and method to use."""
+
+        self.__user = user
+        self.__file_directory = file_directory
+        self.__all_msg = all_msg
+        self.__all_and_user_msg = all_and_user_msg
+        self.__user_only_msg = user_only_msg
     
+    def analysis(self):
+        """Parses a file according to method stated."""
+
+        with open(self.__file_directory, 'r') as file:
+            temp_list = [line.strip() for line in file]
+
+            if self.__all_msg == True:
+                all_msg = []
+                for data in temp_list:
+                    all_msg.append(data[0:11])
+                return all_msg
+            
+            if self.__all_and_user_msg == True:
+                all_msg = []
+                user_msg = []
+                for data in temp_list:
+                    if data[11:].strip() == self.__user[0]:
+                        user_msg.append(data[0:11])
+                    else:
+                        all_msg.append(data[0:11])
+                return user_msg, all_msg
+                
+
+
+
+
+
+
+
+
+
+
+
 
 class Analysis:
     """Analyses a text file."""
@@ -71,10 +112,12 @@ class GraphPlotting:
         plt.grid(self.__grid)
         plt.show()
 
-file = Analysis(r'D:\pythonproject\data\data.txt')
-x, y = file.addition_and_filtering()
+file = DataCheck('kitkat22221', file_directory = r'D:\pythonproject\data\data.txt', all_msg = True)
+print(file.analysis())
 
-graphplot = GraphPlotting(x, y, 'red', 'Message statistics', 'Time', 'Message count', True, 75)
-graphplot.graphplot()
+#x, y = file.addition_and_filtering()
+
+#graphplot = GraphPlotting(x, y, 'red', 'Message statistics', 'Time', 'Message count', True, 75)
+#graphplot.graphplot()
 
 __version__ = 1.40
